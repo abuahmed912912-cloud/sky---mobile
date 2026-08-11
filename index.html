@@ -7,55 +7,44 @@
     <meta name="color-scheme" content="light">
     <title>سكاي موبايل - مصمم البطاقات</title>
     
-    <!-- مكتبات EmailJS و Firebase السحابية -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
     <style>
         html, body { background-color: #f0f2f5 !important; color: #333; padding: 10px; margin: 0; min-height: 100vh; -webkit-text-size-adjust: 100%; }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         .container { max-width: 600px; margin: 0 auto; background: #fff; padding: 15px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
-        
         .admin-header { background: #007bff; color: white; padding: 15px; border-radius: 12px; text-align: center; margin-bottom: 20px; }
         .admin-header h2 { font-size: 20px; }
-
         .top-nav-buttons { display: flex; gap: 10px; margin-bottom: 15px; }
         .btn-home { flex: 1; background-color: #28a745; color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; text-align: center; text-decoration: none; font-size: 14px; }
         .btn-logout { flex: 1; background-color: #ff4d4d; color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; text-align: center; text-decoration: none; font-size: 14px; }
-
         .admin-tabs-bar { display: flex; gap: 5px; margin-bottom: 20px; background: #e9ecef; padding: 5px; border-radius: 12px; overflow-x: auto; }
         .tab-btn { flex: 1; min-width: 65px; background: transparent; border: none; padding: 10px 5px; border-radius: 8px; font-weight: bold; font-size: 11px; cursor: pointer; text-align: center; color: #495057; transition: 0.2s; white-space: nowrap; }
         .tab-btn.active { background: #007bff; color: white; }
-
         .form-group { margin-bottom: 15px; }
         label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 13px; color: #495057; }
-        input, select { width: 100%; padding: 12px; border: 1px solid #ced4da; border-radius: 10px; font-size: 14px; background: #fff; }
+        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ced4da; border-radius: 10px; font-size: 14px; background: #fff; }
         .btn-main { background-color: #007bff; color: white; border: none; padding: 12px; width: 100%; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 15px; }
-
         .categories-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 12px; }
         .cat-chip { background: #fff; border: 1px solid #ced4da; padding: 8px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; white-space: nowrap; cursor: pointer; color: #495057; }
         .cat-chip.active { background: #007bff; color: #fff; border-color: #007bff; }
-
         .templates-preview-scroll { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; min-height: 95px; }
         .thumb-card { flex: 0 0 75px; height: 95px; border-radius: 8px; overflow: hidden; border: 2px solid #ced4da; cursor: pointer; background: #000; }
         .thumb-card.selected { border-color: #007bff; transform: scale(1.03); }
         .thumb-card img { width: 100%; height: 100%; object-fit: cover; }
-
         .dropzone-box { display: block; border: 2px dashed #007bff; background: #f8f9fa; padding: 20px 15px; border-radius: 12px; text-align: center; cursor: pointer; margin-bottom: 15px; font-size: 14px; font-weight: bold; color: #007bff; }
-
         .preview-box { background: #fff; border: 1px solid #e9ecef; padding: 15px; border-radius: 14px; margin-top: 15px; }
         #canvasContainer { position: relative; width: 100%; border-radius: 10px; overflow: hidden; margin-bottom: 15px; border: 1px solid #e9ecef; background: #000; text-align: center; }
         #previewCanvas { width: 100%; height: auto; display: block; }
         #outputImage { width: 100%; height: auto; display: none; border-radius: 10px; }
-
         .action-links { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
         .link-btn { display: block; width: 100%; padding: 13px; border-radius: 10px; font-weight: bold; font-size: 14px; text-align: center; color: white; border: none; cursor: pointer; text-decoration: none; }
         .download-img-btn { background-color: #007bff; }
         .copy-link-btn { background-color: #6f42c1; }
         .store-link-btn { background-color: #17a2b8; }
         .whatsapp-channel-btn { background-color: #128c7e; }
-
         .client-credits-footer { margin-top: 20px; padding-top: 12px; border-top: 1px solid #e9ecef; text-align: center; font-size: 12px; color: #6c757d; font-weight: 600; }
         .admin-card { background: #fff; border: 1px solid #e9ecef; padding: 15px; border-radius: 12px; margin-bottom: 15px; }
         .sub-img-list { font-size: 13px; color: #555; margin: 8px 0; background: #f8f9fa; padding: 10px; border-radius: 8px; border: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
@@ -68,23 +57,22 @@
     <div class="container" id="mainContainer"></div>
 
     <script>
-        // 📌 إعدادات Firebase السحابية (استبدلها بمعلومات مشروعك المجاني من Firebase)
+        // 📌 تهيئة Firebase
         const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT.firebaseapp.com",
-            databaseURL: "https://YOUR_PROJECT-default-rtdb.firebaseio.com",
-            projectId: "YOUR_PROJECT",
-            storageBucket: "YOUR_PROJECT.appspot.com",
-            messagingSenderId: "YOUR_SENDER_ID",
-            appId: "YOUR_APP_ID"
+            apiKey: "AIzaSyDNwIUGqA2dm5Mrx5S06LIEGPJ_VgW3eFc",
+            authDomain: "sky-mobile-8e245.firebaseapp.com",
+            databaseURL: "https://sky-mobile-8e245-default-rtdb.firebaseio.com",
+            projectId: "sky-mobile-8e245",
+            storageBucket: "sky-mobile-8e245.firebasestorage.app",
+            messagingSenderId: "1066510361417",
+            appId: "1:1066510361417:web:a5e17c7f3c8e267b1d3098",
+            measurementId: "G-PWC1MKDL56"
         };
 
-        // تهيئة السيرفر السحابي
-        if (!firebase.apps.length && firebaseConfig.apiKey !== "YOUR_API_KEY") {
-            firebase.initializeApp(firebaseConfig);
-        }
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
 
-        let masterPassword = localStorage.getItem('sky_master_password') || "sky2026"; 
+        let masterPassword = "sky2026"; 
 
         let defaultCategories = [
             { id: 'cat_net', name: '📶 الشبكات' },
@@ -93,13 +81,9 @@
             { id: 'cat_friday', name: '🕌 جمعة مباركة' }
         ];
 
-        let defaultDesigns = [
-            { id: 'def_1', categoryId: 'cat_net', image: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80' },
-            { id: 'def_2', categoryId: 'cat_friday', image: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=800&q=80' }
-        ];
-
         let categories = defaultCategories;
-        let designs = defaultDesigns;
+        let designs = [];
+
         let globalLinks = {
             appUrl: 'https://play.google.com/store/apps/details?id=com.skymobile.app',
             whatsappUrl: 'https://whatsapp.com/channel/YOUR_CHANNEL_LINK'
@@ -109,43 +93,17 @@
         let activeCategory = 'all'; 
         let selectedDesignId = null;
 
-        window.onload = function() { 
-            listenToCloudData();
-        };
-
-        // المزامنة التلقائية مع السيرفر السحابي لكل الأجهزة في نفس اللحظة
-        function listenToCloudData() {
-            if (typeof firebase !== 'undefined' && firebase.apps.length) {
-                const db = firebase.database();
-                db.ref('sky_data').on('value', (snapshot) => {
-                    const data = snapshot.val();
-                    if (data) {
-                        if (data.categories) categories = data.categories;
-                        if (data.designs) designs = data.designs;
-                        if (data.links) globalLinks = data.links;
-                    }
-                    checkRoute();
-                });
-            } else {
-                // في حال عدم إدخال مفاتيح Firebase يعمل محلياً مؤقتاً
-                categories = JSON.parse(localStorage.getItem('sky_categories_db')) || defaultCategories;
-                designs = JSON.parse(localStorage.getItem('sky_public_designs')) || defaultDesigns;
-                checkRoute();
+        // الاستماع للبيانات الحية من Firebase
+        db.ref('appData').on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                if (data.categories) categories = Object.values(data.categories);
+                if (data.designs) designs = Object.values(data.designs);
+                if (data.links) globalLinks = data.links;
+                if (data.masterPassword) masterPassword = data.masterPassword;
             }
-        }
-
-        function saveAllData() {
-            if (typeof firebase !== 'undefined' && firebase.apps.length) {
-                firebase.database().ref('sky_data').set({
-                    categories: categories,
-                    designs: designs,
-                    links: globalLinks
-                });
-            } else {
-                localStorage.setItem('sky_categories_db', JSON.stringify(categories));
-                localStorage.setItem('sky_public_designs', JSON.stringify(designs));
-            }
-        }
+            checkRoute();
+        });
 
         function checkRoute() {
             const container = document.getElementById('mainContainer');
@@ -381,7 +339,7 @@
         function renderAdminPanel(container) {
             container.innerHTML = `
                 <div class="admin-header">
-                    <h2>لوحة التحكم</h2>
+                    <h2>لوحة التحكم السحابية</h2>
                 </div>
                 <div class="top-nav-buttons">
                     <a href="?preview=true" class="btn-home">👁️ واجهة الزوار</a>
@@ -447,7 +405,7 @@
 
                 tabContainer.innerHTML = `
                     <div class="admin-card">
-                        <h3>إضافة تصميم جديد (سحابي)</h3>
+                        <h3>إضافة تصميم جديد</h3>
                         <div class="form-group" style="margin-top:10px;">
                             <label>اختر القسم:</label>
                             <select id="newDesignCat">${categoriesOptions}</select>
@@ -456,11 +414,11 @@
                             📁 اضغط لاختيار صورة التصميم
                             <input type="file" id="designFileInput" accept="image/*" style="display:none;" onchange="handleImageUpload(this)">
                         </label>
-                        <button class="btn-main" id="saveBtn" onclick="addNewDesign()">حفظ ونشر التصميم عالمياً</button>
+                        <button class="btn-main" id="saveBtn" onclick="addNewDesign()">☁️ رفع التصميم للسحابة فوراً</button>
                     </div>
 
                     <div class="admin-card">
-                        <h3>التصاميم المضافة (${designs.length})</h3>
+                        <h3>التصاميم الحالية (${designs.length})</h3>
                         ${designsList}
                     </div>
                 `;
@@ -520,12 +478,12 @@
         function handleImageUpload(input) {
             if (input.files && input.files[0]) {
                 const saveBtn = document.getElementById('saveBtn');
-                saveBtn.innerText = 'جاري الضغط والمعالجة السحابية...';
+                saveBtn.innerText = 'جاري الضغط والمعالجة...';
                 saveBtn.disabled = true;
 
                 compressAndSaveImage(input.files[0], (compressedBase64) => {
                     uploadedCompressedBase64 = compressedBase64;
-                    saveBtn.innerText = 'حفظ ونشر التصميم عالمياً';
+                    saveBtn.innerText = '☁️ رفع التصميم للسحابة فوراً';
                     saveBtn.disabled = false;
                 });
             }
@@ -538,53 +496,49 @@
             }
 
             const categoryId = document.getElementById('newDesignCat').value;
+            const newId = 'des_' + Date.now();
             const newDesign = {
-                id: 'des_' + Date.now(),
+                id: newId,
                 categoryId: categoryId,
                 image: uploadedCompressedBase64
             };
 
-            designs.unshift(newDesign);
-            saveAllData();
-            uploadedCompressedBase64 = null;
-            alert('تم نشر التصميم بنجاح لجميع الزوار وفي كافة الهواتف!');
-            renderAdminPanel(document.getElementById('mainContainer'));
+            db.ref('appData/designs/' + newId).set(newDesign).then(() => {
+                alert('🎉 تم رفع التصميم سحابياً بنجاح! سيظهر لجميع الزوار فوراً.');
+                uploadedCompressedBase64 = null;
+            });
         }
 
         function deleteDesign(id) {
-            designs = designs.filter(d => d.id !== id);
-            saveAllData();
-            renderAdminPanel(document.getElementById('mainContainer'));
+            db.ref('appData/designs/' + id).remove();
         }
 
         function addNewCategory() {
             const name = document.getElementById('newCatName').value.trim();
             if (!name) return;
+            const newId = 'cat_' + Date.now();
 
-            categories.push({ id: 'cat_' + Date.now(), name: name });
-            saveAllData();
-            renderAdminPanel(document.getElementById('mainContainer'));
+            db.ref('appData/categories/' + newId).set({ id: newId, name: name });
         }
 
         function deleteCategory(id) {
-            categories = categories.filter(c => c.id !== id);
-            saveAllData();
-            renderAdminPanel(document.getElementById('mainContainer'));
+            db.ref('appData/categories/' + id).remove();
         }
 
         function saveLinks() {
-            globalLinks.appUrl = document.getElementById('appUrlInput').value.trim();
-            globalLinks.whatsappUrl = document.getElementById('waUrlInput').value.trim();
-            saveAllData();
-            alert('تم حفظ الروابط بنجاح!');
+            const appUrl = document.getElementById('appUrlInput').value.trim();
+            const waUrl = document.getElementById('waUrlInput').value.trim();
+            db.ref('appData/links').set({ appUrl: appUrl, whatsappUrl: waUrl }).then(() => {
+                alert('تم حفظ الروابط بنجاح!');
+            });
         }
 
         function updateAdminPassword() {
             const newPass = document.getElementById('newPassInput').value.trim();
             if (!newPass) return alert('أدخل كلمة المرور الجديدة');
-            masterPassword = newPass;
-            localStorage.setItem('sky_master_password', newPass);
-            alert('تم تغيير كلمة المرور بنجاح!');
+            db.ref('appData/masterPassword').set(newPass).then(() => {
+                alert('تم تغيير كلمة المرور بنجاح!');
+            });
         }
     </script>
 </body>
